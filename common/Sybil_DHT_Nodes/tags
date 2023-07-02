@@ -1,0 +1,20 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Config	main.go	/^type Config struct {$/;"	d
+Init	main.go	/^func Init() {$/;"	d
+NewDHT	dht.go	/^func NewDHT(ctx context.Context, host host.Host, bootstrapPeers []multiaddr.Multiaddr) (*dht.IpfsDHT, error) {$/;"	d
+NewHost	host.go	/^func NewHost(ctx context.Context, seed int64, port int) (host.Host, error) {$/;"	d
+RandBase58String	main.go	/^func RandBase58String(length int) *string {$/;"	d
+Set	main.go	/^func (al *addrList) Set(value string) error {$/;"	d
+String	main.go	/^func (al *addrList) String() string {$/;"	d
+addrList	main.go	/^type addrList []multiaddr.Multiaddr$/;"	d
+base58chars	main.go	/^var base58chars = []rune("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")$/;"	d
+main	main.go	/^func main() {$/;"	d
+options	dht.go	/^	var options []dht.Option$/;"	d
+run	main.go	/^func run(h host.Host, cancel func()) {$/;"	d
+runRequest	bitswap.go	/^func runRequest(ctx context.Context, runenv *runtime.RunEnv, h host.Host, bstore blockstore.Blockstore, ex exchange.Interface) error {$/;"	d
+wg	dht.go	/^	var wg sync.WaitGroup$/;"	d
