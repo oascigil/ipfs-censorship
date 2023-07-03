@@ -4,8 +4,10 @@ Below you can find instructions to (i) run experiments to generate data to plot 
 
 ## Generating data
 Run two sets of experiments measuring generation time for RSA and EDDSA:
-`go run measureGenerateSybilKeys rsa > timing_rsa.csv`
-`go run measureGenerateSybilKeys eddsa > timing_eddsa.csv`
+```
+go run measureGenerateSybilKeys rsa > timing_rsa.csv
+go run measureGenerateSybilKeys eddsa > timing_eddsa.csv
+```
 
 We provide our `sample_rsa.csv` and `sample_eddsa.csv` files for reference (generating RSA keys takes a while).
 
