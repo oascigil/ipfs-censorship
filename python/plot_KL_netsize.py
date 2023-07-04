@@ -23,8 +23,6 @@ columnwidth = num_query_ids + num_query_ids/4
 padding = num_query_ids/8
 text_location = 9
 plt.figure()
-# Create two subplots and unpack the output array immediately
-# f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
 
 n_array = [10000, 15000, 20000, 25000]
 column = 0
@@ -50,9 +48,7 @@ for n in n_array:
         if status == "eclipsed":
             num_fn = len(np.where(np.array(kls) < fixed_threshold)[0])
             num_eclipsed = len(kls)
-    # Add text at the top of the column resporting percentage of successful attacks and percentage of false negatives upto 2 decimal places
     report = "FN: " + str(round(num_fn / num_eclipsed * 100,1)) + "%\nFP: " + str(round(num_fp / num_honest * 100,1)) + "%"
-    # Place the text report in a partially transparent box without border
     plt.text(columnwidth*(column+0.5), text_location, report, ha="center", va="center", bbox=dict(facecolor='white', alpha=0.5, edgecolor='none'))
 
     plt.axvline(x = columnwidth*(column+1), color="grey", linestyle = "-")
@@ -68,8 +64,7 @@ plt.xlim((0, columnwidth*column))
 plt.ylim(ylim)
 yticks = plt.yticks()
 plt.yticks([fixed_threshold] + list(yticks[0]), [r"$\mathsf{thr}$="+str(fixed_threshold)] + [str(t) for t in list(yticks[0])])
-#plt.title("KL divergence for different network sizes (20 Sybils)")
 # plt.legend()
-if args.output != None:
-    plt.savefig("./experiment_plots/KL_diff_netsizes_threshold"+str(fixed_threshold)+".pdf")
+if args.output is not None:
+    plt.savefig(os.path.join("plots", args.output))
 plt.show()

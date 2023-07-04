@@ -12,7 +12,7 @@ go build
 ```
 Run experiment (your working directory is still **experimentCombined/experiment**)
 ```
-./main -cids 10 -clients 5 -sybils 20 -region 20 -outpath "../experiment_results/sybil20CombinedNew"
+./main -cids 10 -clients 5 -sybils 20 -region 20 -outpath "../experiment_results_new"
 ```
 The arguments are:
 * `-cids`: number of CIDs to eclipse for each client (default 1)
@@ -21,22 +21,6 @@ The arguments are:
 * `-region`: size of query region in mitigation, specified as expected number of honest peers in the region (default 20 is the value used in all experiments)
 * `-outpath`: path to store output of the experiment (specify a directory without a trailing "/")
 
-The total number of CIDs that will be attacked and tested is `clients*cids`. For each CID, the following steps are done: launch attack, test attack detection, provide content, find providers and test if attack is successful, provide content again with mitigation, find providers with mitigation and test if mitigation is successful. All the data for each client is then written to a json file in the directory specified by `outpath`. For each CID, the experiment takes about 5 minutes.
+The total number of CIDs that will be attacked and tested is `clients*cids`. For each CID, the following steps are done: launch attack, test attack detection, provide content, find providers and test if attack is successful, provide content again with mitigation, find providers with mitigation and test if mitigation is successful. All the data for each client is then written to a json file in the directory `outpath`/sybil`X`Combined where `X` is the number of Sybils. For each CID, the experiment takes about 5 minutes.
 
-Repeat the experiment for different number of Sybils to generate all the required data. Use `-sybils 0` to run an experiment with no attack. Change `outpath` when running the experiment with different parameters to avoid overwriting the data.
-
-## Generate plots
-Fig. 7
-```
-python plotting/attackProb.py --output "attack_success_rate.pdf"
-```
-
-Fig. 10
-```
-python plotting/calcAccuracy.py --output "fp-fn"
-```
-
-Fig. 11
-```
-python plotting/plotKLs.py --output "KLs.pdf"
-```
+Repeat the experiment for different number of Sybils to generate all the required data. Use `-sybils 0` to run an experiment with no attack.

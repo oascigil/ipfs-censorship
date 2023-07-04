@@ -72,10 +72,10 @@ def peerids_distribution(peers):
     peerids_distribution_chunk88_data.append(density88)
 
 
-with open("data/all-peerids.csv", 'r') as file:
+with open("crawl_data/all-peerids.csv", 'r') as file:
     nebula_peerids = {line[0]:line[1] for line in csv.reader(file)}
 
-filename = "data/nebula-peers-2crawls.csv"
+filename = "crawl_data/nebula-peers-2crawls.csv"
 
 with open(filename, 'r') as file:
     all_crawls = [line for line in csv.reader(file)]
@@ -118,13 +118,13 @@ for i in range(len(all_crawls)):
 peerids = [bytes_to_bitstring(peers[p].key) for p in peers]
 
 # Write the peerids to a file
-with open("data/peerids_bitstrings.csv", 'w') as file:
+with open("crawl_data/peerids_bitstrings.csv", 'w') as file:
     writer = csv.writer(file)
     for p in peerids:
         writer.writerow([p])
 
 # Read the peerids from a file
-with open("data/peerids_bitstrings.csv", 'r') as file:
+with open("crawl_data/peerids_bitstrings.csv", 'r') as file:
     peerids = [line[0] for line in csv.reader(file)]
 
 ## Attack scenarios
@@ -147,5 +147,5 @@ hon_prefix_len_counts = compute_prefix_len_counts_with_peerids(hon_query_ids, pe
 
 # Write prefix_len_counts, hon_prefix_len_counts, and len(peerids) as a JSON file
 import json
-with open("data/prefix_len_counts.json", 'w') as file:
+with open("crawl_data/prefix_len_counts.json", 'w') as file:
     json.dump({"prefix_len_counts": prefix_len_counts, "hon_prefix_len_counts": hon_prefix_len_counts, "peerids": len(peerids)}, file)

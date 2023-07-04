@@ -10,6 +10,7 @@ import (
 	"os"
 	"strings"
 	"time"
+	"path/filepath"
 
 	"github.com/ipfs/go-cid"
 	// "github.com/libp2p/go-libp2p-core/peer"
@@ -100,6 +101,7 @@ func main() {
 		fmt.Println("Path for output logs not specified. Use -outfile <path>")
 		os.Exit(1)
 	}
+	outpath = filepath.Join(outpath, "/sybil" + fmt.Sprint(numOfSybils) + "Combined")
 	err := os.MkdirAll(outpath, os.ModePerm)
 	if err != nil {
 		log.Println("Could not create directory", outpath)

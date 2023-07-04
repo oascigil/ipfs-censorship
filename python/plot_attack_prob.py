@@ -1,8 +1,7 @@
 import argparse
-import json
 from glob import glob
+import os
 import numpy as np
-import matplotlib
 import matplotlib.pyplot as plt
 
 from utils import *
@@ -29,9 +28,11 @@ from style import *
 # Take a commandline argument for the output file name
 argParser = argparse.ArgumentParser()
 argParser.add_argument("-o", "--output", help="output filename")
+argParser.add_argument("-i", "--input", help="input experiment results path", default="../experimentCombined/experiment_results")
+argParser.add_argument("-s", "--sybils", help="list of sybil counts to plot", nargs='+', type=int, default=[15,20,25,30,35,40,45])
 args = argParser.parse_args()
 
-numSybilsList = [15,20,25,30,35,40,45]
+numSybilsList = args.sybils
 
 fixed_threshold = 0.94
 
@@ -43,7 +44,7 @@ num_detected = np.zeros(len(numSybilsList))
 counter = 0
 plt.figure()
 for numSybils in numSybilsList:
-    for filename in glob("./experiment_results/sybil" + str(numSybils) + "Combined" + "/*.json"):
+    for filename in glob(os.path.join(args.input, "sybil" + str(numSybils) + "Combined", "*.json")):
         client, results = read_data(filename)
         for result in results:
             if result["Counts"] is None:
@@ -60,14 +61,6 @@ for numSybils in numSybilsList:
                 num_detected[counter] += 1
     counter += 1
 
-# Create a bar plot showing for each number of sybils, the percetage of attacks that were eclipsed and the percentage of attacks that were detected
-# Increse the width of the bars to make them more visible
-# width = 1
-# plt.bar(np.array(numSybilsList) - width, num_no_honest_resolver/num_attack_experiments*100, width, label="No honest resolver found")
-# plt.bar(np.array(numSybilsList), num_attack_eclipsed/num_attack_experiments*100, width, label="Content unavailable")
-# plt.bar(np.array(numSybilsList) + width, num_detected/num_attack_experiments*100, width, label="Attack detected")
-# Instead of bar plots, use line plots with only markers and no lines
-# plt.plot(numSybilsList, num_no_honest_resolver/num_attack_experiments*100, marker="o", label="No honest resolver found")
 plt.plot(numSybilsList, num_attack_eclipsed/num_attack_experiments*100, marker="o", lw = 3, label="Attack effective (content censored)")
 plt.plot(numSybilsList, num_detected/num_attack_experiments*100, ls='--', marker="o", lw = 3, label="Attack detected")
 
@@ -79,7 +72,6 @@ plt.xticks(numSybilsList)
 plt.gca().spines['top'].set_visible(False)
 plt.gca().spines['right'].set_visible(False)
 plt.tight_layout()
-#plt.title("Percentage of attacks that were effective and detected")
 if args.output is not None:
-    plt.savefig("./experiment_plots/"+args.output)
+    plt.savefig(os.path.join("plots", args.output))
 plt.show()

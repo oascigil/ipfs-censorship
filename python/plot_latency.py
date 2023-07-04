@@ -25,6 +25,7 @@ from detection import *
 # Take a commandline argument for the output file name
 argParser = argparse.ArgumentParser()
 argParser.add_argument("-o", "--output", help="output filename")
+argParser.add_argument("-i", "--input", help="input experiment results path", default="../experimentCombined/experiment_results")
 args = argParser.parse_args()
 
 numSybilsList = [15,20,30,45]
@@ -42,7 +43,7 @@ plt.figure()
 numSybils = 45
 oneProvider = False
 
-filename = "../experiment_results/sybil" + str(numSybils) + "LatencySpecial20" + ("Provider1" if oneProvider else "") + "/latency.json"
+filename = os.path.join(args.input, "sybil" + str(numSybils) + "LatencySpecial20" + ("Provider1" if oneProvider else ""), "*.json")
 # The file has many lines, each line has one json object. Read the fields "ProvideLatencyMs", "FindProvsLatencyMs", "ProvideMitLatencyMs" and "FindProvsMitLatencyMs" and append each of them to a separate list. That's all.
 provideLatencyMs = []
 findProvsLatencyMs = []
@@ -70,5 +71,5 @@ print("FindProvsMit latency: " + str(np.mean(findProvsMitLatencyMs)))
 # plt.ylabel("Latency (ms)")
 # plt.title("Latency of the four operations")
 # if args.output is not None:
-#     plt.savefig(args.output)
+#     plt.savefig(os.path.join("plots", args.output))
 # plt.show()
