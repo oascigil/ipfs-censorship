@@ -11,7 +11,7 @@ import (
     "time"
     "math/rand"
     "github.com/multiformats/go-multiaddr"
-    "github.com/libp2p/go-libp2p-kad-dht"
+    dht "github.com/libp2p/go-libp2p-kad-dht"
     "github.com/ipfs/go-cid"
     "github.com/libp2p/go-libp2p-core/peer"
     rhost "github.com/libp2p/go-libp2p/p2p/host/routed"
@@ -120,8 +120,8 @@ func main(){
 		dhtProvider, providerid := newDHTNode(config, ctx, serverDHT)
         dhtClient.EnableMitigation()
         dhtProvider.EnableMitigation()
-		dhtClient.SetSpecialProvideNumber(specialProvideNumber)
-		dhtProvider.SetSpecialProvideNumber(specialProvideNumber)
+		dhtClient.SetProvideRegionSize(specialProvideNumber)
+		dhtProvider.SetProvideRegionSize(specialProvideNumber)
 		location := Location{
 			ClientPeerID: clientid,
 		}
@@ -159,7 +159,6 @@ func main(){
             temp := strings.Split(out,"\n")
             if out == ""{
                 log.Println("Could not get closest nodes in DHT...")
-                os.Exit(1)
             }
             currentClosest := temp[0]
             peerIdList := temp[1:]

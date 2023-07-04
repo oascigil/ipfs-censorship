@@ -77,8 +77,8 @@ func killSybils(sybils []*exec.Cmd) {
 }
 
 func launchSybils(privKeyList []string, pubkeylist []string) []*exec.Cmd {
-	//portNumber := 62800
-	portNumber := 0
+	portNumber := 63800
+	//portNumber := 0
 	var sybils []*exec.Cmd
 	for i := 0; i < len(privKeyList); i++ {
 		fmt.Println("Starting DHT Sybil with ID:", pubkeylist[i])
@@ -99,7 +99,7 @@ func launchSybils(privKeyList []string, pubkeylist []string) []*exec.Cmd {
 			log.Printf("Failed to start Sybil: %v", err)
 			os.Exit(1)
 		}
-		//portNumber = portNumber + 1
+		portNumber = portNumber + 1
 	}
 	time.Sleep(30 * time.Second)
 
