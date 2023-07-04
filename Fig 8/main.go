@@ -118,7 +118,7 @@ func attackCid(tcid string, sybilNumber int, sybils []*exec.Cmd, ctx context.Con
         hrs:=0
 
         succesive :=0
-        timeTillSucess := 30
+        timeTillSucess := 50
         var sucessHourly []string
         var percentEclipsHourly []string
 
@@ -128,7 +128,7 @@ func attackCid(tcid string, sybilNumber int, sybils []*exec.Cmd, ctx context.Con
                 log.Fatal(err)
         }
 
-        for i := 0; i < 30+1; i++ {
+        for i := 0; i < 50+1; i++ {
 
                 if succesive ==3{
                         break
