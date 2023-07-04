@@ -90,10 +90,10 @@ func main() {
 	var outpath string // path to store output of the experiment
 	flag.IntVar(&numOfEclipses, "cids", 1, "Number of CIDs to eclipse")
 	flag.IntVar(&numOfLocations, "clients", 1, "Number of clients to test from")
-	flag.IntVar(&numOfSybils, "sybils", 20, "Number of Sybils to generate")
+	flag.IntVar(&numOfSybils, "sybils", 45, "Number of Sybils to generate")
 	flag.IntVar(&regionSize, "region", 20, "Region size for mitigation")
 	flag.StringVar(&outpath, "outpath", "", "Path for output logs")
-	fileName := flag.String("fileName", "./data/cat.txt", "File to Provide")
+	fileName := flag.String("filename", "./data/cat.txt", "File to Provide")
 	flag.Parse()
 
 	if outpath == "" {
