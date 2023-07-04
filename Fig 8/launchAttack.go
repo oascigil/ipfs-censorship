@@ -1,12 +1,10 @@
 package main
 
 import (
-        //      "encoding/json"
         "fmt"
         "bytes"
         kspace "github.com/libp2p/go-libp2p-kbucket/keyspace"
         mh "github.com/multiformats/go-multihash"
-        //      "io/ioutil"
         "log"
         "os"
         "os/exec"
@@ -14,8 +12,8 @@ import (
         "strings"
         "time"
         "github.com/schollz/progressbar/v3"
-        //      "encoding/csv"
 )
+
 
 func appendTextToFile(filename string, text string) error {
         f, err := os.OpenFile(filename, os.O_RDWR|os.O_APPEND, 0660);
@@ -24,6 +22,7 @@ func appendTextToFile(filename string, text string) error {
 
         return err
 }
+
 
 func getCIDWithoutAdding(filename string) []byte {
 
@@ -37,6 +36,7 @@ func getCIDWithoutAdding(filename string) []byte {
         return out
 }
 
+
 func addCID(filename string) error {
 
         cmd := exec.Command(IPFS_PATH, "add", filename)
@@ -44,8 +44,9 @@ func addCID(filename string) error {
 
         return err
 }
-func getCurrentClosest(CID string) string {
 
+
+func getCurrentClosest(CID string) string {
         cmd := exec.Command(IPFS_PATH, "dht", "query", CID)
         var out bytes.Buffer
         var stderr bytes.Buffer
@@ -59,29 +60,8 @@ func getCurrentClosest(CID string) string {
         }
 
         return out.String()
-
-        /*
-            fmt.Println("HERE")
-                out, err := exec.Command("/space/onur/kubo/cmd/ipfs/ipfs", "dht", "query", CID).Output()
-                if err != nil {
-                log.Println("kubo dht query failed")
-                        log.Println(err)
-                        return nil
-                }
-            fmt.Printf("getCurrentClosest() returning %q\n", out)
-                return out*/
 }
 
-/*
-func killSybils(){
-        fmt.Println("Killing old DHT Sybils...")
-        cmd := exec.Command("pkill", "-f", "SybilNode")
-        cmd.Dir = "./"
-        if err := cmd.Start(); err != nil {
-                log.Printf("Failed to start cmd: %v", err)
-                return
-        }
-}*/
 
 func killSybils(sybils []*exec.Cmd){
         fmt.Println("Killing old DHT Sybils...")
@@ -95,7 +75,6 @@ func killSybils(sybils []*exec.Cmd){
 }
 
 func launchSybils(privKeyList []string, pubkeylist []string) []*exec.Cmd{
-        //portNumber := 62800
         portNumber := 0
         var sybils []*exec.Cmd
         for i := 0; i < len(privKeyList); i++ {
@@ -117,7 +96,6 @@ func launchSybils(privKeyList []string, pubkeylist []string) []*exec.Cmd{
                         log.Printf("Failed to start Sybil: %v", err)
                         os.Exit(1)
                 }
-                //portNumber = portNumber + 1
         }
         time.Sleep(30 * time.Second)
 
