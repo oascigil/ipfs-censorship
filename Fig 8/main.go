@@ -141,7 +141,6 @@ func attackCid(tcid string, sybilNumber int, sybils []*exec.Cmd, ctx context.Con
 
                 for j :=0; j<attemptsPerHour; j++{
                         fmt.Println("Hour", i, ", attempt", j)
-                        // Create a client DHT node in a random location
                         dht := newDHTNode(config, ctx)
                         provAddrInfos, err := dht.FindProviders(ctx, cid0)
                         if (err != nil) {
@@ -165,10 +164,8 @@ func attackCid(tcid string, sybilNumber int, sybils []*exec.Cmd, ctx context.Con
                         
                         fmt.Println("Percentage eclipsed: ", percentEclipsed)
                         fmt.Println()
-//                      j = j + 1
-                        //CHANGE with different number of DHT lookups
+                        //change with different number of DHT lookups
                         time.Sleep(4 * time.Minute)
-                        //              change to 4 min
                 }
 
                 if sucess ==attemptsPerHour{
@@ -183,9 +180,7 @@ func attackCid(tcid string, sybilNumber int, sybils []*exec.Cmd, ctx context.Con
 
                 sucessHourly = append(sucessHourly, strconv.Itoa(sucess))
                 
-//              i = i+ 1
                 time.Sleep(40 * time.Minute)
-//              change to 40 min
                 hrs= hrs + 1
 
         }
@@ -197,8 +192,6 @@ func attackCid(tcid string, sybilNumber int, sybils []*exec.Cmd, ctx context.Con
         fmt.Println()
         fmt.Println()
         return record
-//              return []string{targetCID, "error"}
-//      resultwriter.Write(record)
 }
 
 func main() {
@@ -244,7 +237,5 @@ func main() {
                 resultswriter.Write(result)
                 resultswriter.Flush()
         }
-
-//      resultswriter.Flush()
 
 }
