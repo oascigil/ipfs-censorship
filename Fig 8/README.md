@@ -16,5 +16,5 @@ The second instance can now launch the censorship, logging the time taken for al
 go run main.go <sybilnumber> <filename>
 ```
 
-
+Note that this experiment takes a long time as it checks hourly (up to 50 hours) if the cid is censored, for a large number of cids.
 
