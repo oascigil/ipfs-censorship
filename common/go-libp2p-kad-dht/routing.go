@@ -903,7 +903,7 @@ func (dht *IpfsDHT) findProvidersAsyncRoutineReturnOnPathNodes(ctx context.Conte
 					provs, _, err2 := dht.protoMessenger.GetProviders(ctx, p, key)
 
 					if err2 != nil {
-						fmt.Printf("[FindProvidersAsync...] GetProviders to peer %s was unsuccessful\n", p.String())
+						// fmt.Printf("[FindProvidersAsync...] GetProviders to peer %s was unsuccessful\n", p.String())
 					} else {
 						select {
 						case successContacted <- p:
