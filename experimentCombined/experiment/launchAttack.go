@@ -1,14 +1,12 @@
 package main
 
 import (
-	// 	"encoding/json"
 	"bytes"
 	"fmt"
 
 	kspace "github.com/libp2p/go-libp2p-kbucket/keyspace"
 	mh "github.com/multiformats/go-multihash"
 
-	// 	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -17,7 +15,6 @@ import (
 	"time"
 
 	"github.com/schollz/progressbar/v3"
-	// "encoding/csv"
 )
 
 func appendTextToFile(filename string, text string) error {

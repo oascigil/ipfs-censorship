@@ -8,7 +8,6 @@ import (
 	kspace "github.com/libp2p/go-libp2p-kbucket/keyspace"
 	mh "github.com/multiformats/go-multihash"
 	"log"
-	"errors"
 )
 
 func generateNewKey(currentClosest string, targetCIDKey kspace.Key) (string,kspace.Key,string,error) {
@@ -18,7 +17,7 @@ func generateNewKey(currentClosest string, targetCIDKey kspace.Key) (string,kspa
 	currentDistance := currentClosestKey.Distance(targetCIDKey)
 
 	tries := 0
-	for true {
+	for {
 		tries = tries+1
 		privateKey, publicKey, err := crypto.GenerateEd25519Key(rand.Reader)
 		if err != nil {
@@ -62,7 +61,7 @@ func generateNewKey(currentClosest string, targetCIDKey kspace.Key) (string,kspa
 			return prettyID,newPeerKey,crypto.ConfigEncodeKey(marshal_priv), nil
 		}
 		if tries > 1000000 {
-			return "",kspace.Key{nil,nil,nil},"",errors.New(fmt.Sprintf("generating Sybil key took too many (%d) tries", tries))
+			return "",kspace.Key{nil,nil,nil},"",fmt.Errorf("generating Sybil key took too many (%d) tries", tries)
 		}
 
 	}
