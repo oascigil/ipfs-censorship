@@ -31,7 +31,9 @@ func attackSucces(output string)bool{
 
 }
 
+
 type addrList []multiaddr.Multiaddr
+
 
 type Config struct {
     Port           int
@@ -39,14 +41,13 @@ type Config struct {
     DiscoveryPeers addrList
 }
 
+
 func Init() {
-    //rand.Seed(time.Now().UnixNano())
     rand.Seed(0)
 }
 
+
 func newDHTNode(config Config, ctx context.Context) (*dht.IpfsDHT) {
-
-
     h, err := NewHost(ctx, 0, 0)
     if err != nil {
         log.Fatal(err)
@@ -59,23 +60,16 @@ func newDHTNode(config Config, ctx context.Context) (*dht.IpfsDHT) {
     }
 
     dht, routedHost := NewDHT(ctx, h, config.DiscoveryPeers)
-
-    // XXX do we need the code below (we can probably do: return dht here) 
-
     // Build host multiaddress
     hostAddr, _ := multiaddr.NewMultiaddr(fmt.Sprintf("/ipfs/%s", routedHost.ID().Pretty()))
-
-    // Now we can build a full multiaddress to reach this host
-    // by encapsulating both addresses:
-    // addr := routedHost.Addrs()[0]
     addrs := routedHost.Addrs()
     
     for _, addr := range addrs {
         log.Println(addr.Encapsulate(hostAddr))
     }
-
     return dht
 }
+
 
 func attackCid(tcid string, sybilNumber int, sybils []*exec.Cmd, ctx context.Context, config Config)([]string){
         start := time.Now()
@@ -101,7 +95,6 @@ func attackCid(tcid string, sybilNumber int, sybils []*exec.Cmd, ctx context.Con
         fmt.Println("Peer List:", peerIdList)
         fmt.Println()
         t1 := time.Now()
-//      killSybils(sybils)
         fmt.Println("Sleeping for ten seconds after killing Sybils...")
         time.Sleep(10 * time.Second)
         fmt.Println()
