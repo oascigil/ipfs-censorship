@@ -1,5 +1,21 @@
 # Artifacts for NDSS #153: Content Censorship in the InterPlanetary File System
 
+## Network Setup
+
+For the experiments involving launching a censorship attack, the Sybils nodes must be launched in 'server mode'. This requires allowing other DHT clients and servers to connect to the Sybil peers. This requires the machine hosting the Sybil peers to have a publicly dialable IP address, i.e., it must not be behind a NAT. We use TCP ports 63800 onwards for the Sybil peers, so make sure to allow ports 63800:63900 if your machine has a firewall. This is usually done using
+```
+sudo ufw allow 63800:63900/tcp
+```
+In some cases, this might happen through a different network administration interface. To check if the machine is publicly dialable and has the required ports open, you can use the tool `nc`. Run the following to listen on port 63800 on the machine on which the experiments will be run:
+```
+nc -vvv -l -p 62800
+```
+On any other machine, try to connect to the experiment machine with IP address `ip_addr` by running:
+```
+nc -vvv ip_addr 62800
+```
+If the connection was successful, then the experiment machine should be dialable with the required ports open.
+
 ## Install Required Dependencies
 
 Running our artifacts require installing Go and Python. Below are instructions for Linux. First, start with updating your system.
