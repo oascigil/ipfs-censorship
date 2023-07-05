@@ -2,7 +2,7 @@ This directory contains simulations to calculate the ideal probability distribut
 <!-- The generated plots will be stored in the **plots** directory. -->
 
 ### Fig. 3
-To generate Fig. 3, we use data from a crawl of the IPFS DHT. The following script processes the crawl data. This step takes some time.
+To generate Fig. 3, we use data from a crawl of the IPFS DHT. The following script processes the crawl data. This step takes about 8 minutes.
 ```
 python process_crawl_data.py
 ```
