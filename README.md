@@ -52,7 +52,19 @@ go version
 Confirm that the command prints the installed version of Go.
 
 ### Install Python
-
+We recommend installing Python 3.10. Most machines will already have Python 3. Also, install `pip` and `venv` if you do not already have it. We recommend `pip` version 22.0.2 if you are using Python 3.10.
+```
+sudo apt install python3.10
+sudo apt install -y python3-pip
+sudo apt install -y python3-venv
+```
+Move to the **python/** directory, create a new virtual environment, and install all the required modules.
+```
+cd python
+python3 -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+```
 ### Install gcc and make
 ```
 sudo apt install make
