@@ -21,8 +21,8 @@ The arguments are:
 * `-region`: size of query region in mitigation, specified as expected number of honest peers in the region (default 20 is the value used in all experiments)
 * `-outpath`: path to store output of the experiment (specify a directory without a trailing "/")
 
-The total number of CIDs that will be attacked and tested is `clients*cids`. For each CID, the following steps are done: launch attack, test attack detection, provide content, find providers and test if attack is successful, provide content again with mitigation, find providers with mitigation and test if mitigation is successful. All the data for each client is then written to a json file in the directory `outpath`/sybil`X`Combined where `X` is the number of Sybils. For each CID, the experiment takes about 5 minutes.
+The total number of CIDs that will be attacked and tested is `clients*cids`. For each CID, the following steps are done: launch attack, test attack detection, provide content, find providers and test if attack is successful, provide content again with mitigation, find providers with mitigation and test if mitigation is successful. All the data for each client is then written to a json file in the directory `outpath`/sybil`X`Combined where `X` is the number of Sybils. For each CID, the experiment takes 4-5 minutes.
 
 Repeat the experiment for different number of Sybils to generate all the required data. Use `-sybils 0` to run an experiment with no attack.
 
-As a shortcut, simply run `python run_experiments.py` to repeat the experiment for 0, 20, 30, 40, 45 Sybils with 5 CIDs and 5 clients each. This set of experiments is expected to take 10 hours. The results will be written to **experiment_results_new/**.
+As a shortcut, simply run `python run_experiments.py` to repeat the experiment for 0, 20, 30, 40, 45 Sybils with 5 CIDs and 5 clients each. This set of experiments is expected to take 8-10 hours. The results will be written to **experiment_results_new/**.
