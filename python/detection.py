@@ -63,7 +63,7 @@ def compute_prefix_len_counts_with_peerids(ids, peerids):
     
     for ID in ids:
         counts = [0]*256
-        closest_ids = trie.n_closest(ID, k)
+        closest_ids = trie.n_closest_keys(ID, k)
         for cid in closest_ids:
             prefix_len = [list(ID)[i] == list(cid)[i] for i in range(len(ID))].index(0)
             counts[prefix_len] += 1
@@ -159,7 +159,7 @@ def experiment_size_from_buckets_with_peerids(ids, peerids):
         for j in range(256):
             rand_id = ID[:j] + gen_random_key(256-j)
             random_id_per_bucket.append(rand_id)
-            closest_ids = trie.n_closest(rand_id, k)
+            closest_ids = trie.n_closest_keys(rand_id, k)
             k_best_ids_per_bucket.append(closest_ids)
         estimates.append(estimate_size_from_buckets(ID, random_id_per_bucket, k_best_ids_per_bucket))
     return estimates

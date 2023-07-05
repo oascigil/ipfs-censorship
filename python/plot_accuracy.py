@@ -11,14 +11,23 @@ from detection import *
 from style import *
 
 ## Data format:
-# {"ClientPeerID":"QmeoU1o2xhntZbM3LPwyqbdoYKTYpyJowe1gomZ8F4YMEF"}
 # {
 #     "TargetCID":"QmbyCHYYXJMv4rG3J7DUDcho1MxBsGXaxFt8uZXbxqKnRR",
 #     "SybilIDs":["","",...],
 #     "PercentEclipsed":100,
 #     "ProviderPeerID":"QmPwWekdyW2MzWUEruXtg6oKG2P2ggVxSaoKmgeyvRp33H",
 #     "IsEclipsed":true,
+#     "RegionSize":20,
+#     "IsMitigated":true,
+#     "UpdatedPeers":["","",...],
+#     "ProviderDiscoveredPeers":["","",...],
+#     "ContactedPeers":["","",...],
+#     "RespondedPeers":["","",...],
+#     "NumContacted":100,
+#     "NumUpdated":20,
+#     "NumSybilsUpdated":20,
 #     "NumIntersection":0,
+#     "NumLookups":10
 #     "Counts":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,4,1,2,3,2,0,...],
 #     "Netsize":8056.427538159879,
 #     "L":7,
