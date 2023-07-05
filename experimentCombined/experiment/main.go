@@ -36,7 +36,7 @@ type Experiment struct {
 	TargetCID                    string
 	SybilIDs                     []string
 	ClosestPeers                 []string
-	PercentEclipsed              float32
+	PercentEclipsed              float64
 	ProviderPeerID               string
 	IsEclipsed                   bool
 	RegionSize                   int
