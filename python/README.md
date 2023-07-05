@@ -38,6 +38,22 @@ To plot the data, simply run `python3 k_closest.py`. The script will automatical
 python plot_attack_prob.py --output "attack_success_rate.pdf" --input "../experimentCombined/experiment_results" --sybils 15 20 25 30 35 40 45
 ```
 ### Fig. 9
+Below you can find instructions to (i) run experiments to generate data to plot Figure 9 and (ii) to generate the plots.
+#### Generating data
+Run two sets of experiments measuring generation time for RSA and EDDSA:
+```
+go run measureGenerateSybilKeys rsa > timing_rsa.csv
+go run measureGenerateSybilKeys eddsa > timing_eddsa.csv
+```
+
+We provide our `./simulation_results/sample_rsa.csv` and `./simulation_results/sample_eddsa.csv` files for reference (generating RSA keys takes a while).
+
+#### Plotting
+Plot the results using:
+`python3 plot_key_generation_time.py`
+
+Note that the script will look for `timing_rsa.csv` and `timing_eddsa.csv` files, so you have to generate them in advance
+
 ### Fig. 10
 ```
 python plot_accuracy.py --output "fp-fn.pdf" --input "../experimentCombined/experiment_results"

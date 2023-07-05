@@ -23,7 +23,7 @@ def human_readable_formatter(x, pos):
         return f"{x:.0f}"
 
 
-def sybil_generation_time(ec_filename = './timing_eddsa.csv', rsa_filename = './timing_rsa.csv'):
+def sybil_generation_time(ec_filename = './simulation_results/timing_eddsa.csv', rsa_filename = './simulation_results/timing_rsa.csv'):
     if(not os.path.exists(rsa_filename) or not os.path.exists(ec_filename)):
         print("sybil_generation_time:", ec_filename, "or",  rsa_filename, "doesn't exist (or both!) - aborting")
         return
