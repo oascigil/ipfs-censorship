@@ -135,5 +135,7 @@ plt.annotate('Chosen detection threshold thr=0.94', xy=(4.1, 1.5), xytext=(4.5, 
             ha='center')
 # set figure size
 if args.output is not None:
+    if not os.path.exists("plots"):
+        os.makedirs("plots")
     plt.savefig(os.path.join("plots", args.output))
 plt.show()

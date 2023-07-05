@@ -1,5 +1,6 @@
 import numpy as np
 import json
+import os
 
 from detection import *
 
@@ -57,6 +58,8 @@ for n in n_array:
         }
         eclipsed_json_string += json.dumps(eclipsed_sample) + "\n"
 
+    if not os.path.exists("simulation_results"):
+        os.makedirs("simulation_results")
     with open("simulation_results/estnsrand_honest_"+str(n)+".json", "w") as outfile:
         outfile.write(honest_json_string)
     with open("simulation_results/estnsrand_eclipsed_"+str(n)+".json", "w") as outfile:

@@ -66,5 +66,7 @@ yticks = plt.yticks()
 plt.yticks([fixed_threshold] + list(yticks[0]), [r"$\mathsf{thr}$="+str(fixed_threshold)] + [str(t) for t in list(yticks[0])])
 # plt.legend()
 if args.output is not None:
+    if not os.path.exists("plots"):
+        os.makedirs("plots")
     plt.savefig(os.path.join("plots", args.output))
 plt.show()
