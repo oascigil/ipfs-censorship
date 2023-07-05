@@ -3,8 +3,8 @@ import numpy as np
 
 from style import *
 
-log_files = {'libp2p v0.23': './k_closest_kubo_0_23.dat', 
-             'libp2p v0.17': './k_closest_kubo_0_17.dat'}
+log_files = {'libp2p v0.23': './simulation_results/k_closest_kubo_0_23.dat', 
+             'libp2p v0.17': './simulation_results/k_closest_kubo_0_17.dat'}
 
 colors = ['#0173b2', '#de8f05', '#029e73', '#d55e00', '#cc78bc', '#ca9161', '#fbafe4', '#949494', '#ece133', '#56b4e9']
 

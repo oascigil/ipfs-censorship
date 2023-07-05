@@ -22,5 +22,5 @@ do
 	sleep 1
 done
 
-cat *.log | sort | uniq -c > k_closests.dat
+cat *.log | sort | uniq -c > ./simulation_results/k_closests.dat
 rm *.log
