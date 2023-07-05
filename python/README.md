@@ -52,7 +52,7 @@ We provide our `./simulation_results/sample_rsa.csv` and `./simulation_results/s
 Plot the results using:
 `python3 plot_key_generation_time.py`
 
-Note that the script will look for `timing_rsa.csv` and `timing_eddsa.csv` files, so you have to generate them in advance
+Note that the script will look for `./simulation_results/timing_rsa.csv` and `./simulation_results/timing_eddsa.csv` files, so you have to generate them in advance (or use the one we provided).
 
 ### Fig. 10
 ```
