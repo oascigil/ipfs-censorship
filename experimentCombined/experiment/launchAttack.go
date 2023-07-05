@@ -103,31 +103,6 @@ func launchSybils(privKeyList []string, pubkeylist []string) []*exec.Cmd {
 	return sybils
 }
 
-func getPercentEclipsed(targetCID string, sybilIDs []string) float32 {
-	// Requires IPFS daemon to be running
-	out := string(getCurrentClosest(targetCID)[:])
-	if out == "" {
-		log.Println("Could not get closest nodes in DHT...")
-		os.Exit(1)
-	}
-	results := strings.Split(out, "\n")
-	if out == "" {
-		log.Println("Could not get closest nodes in DHT...")
-		os.Exit(1)
-	}
-	numSybils := 0
-	for i := 0; i < len(results); i++ {
-		for j := 0; j < len(sybilIDs); j++ {
-			if results[i] == sybilIDs[j] {
-				numSybils += 1
-			}
-		}
-	}
-	percentEclipsed := float32(numSybils) / 20 * 100
-
-	return percentEclipsed
-}
-
 func attackCID(targetCID string, currentClosest string, peerIdList []string, numberOfSybils int) ([]string, []string, error) {
 
 	id_mh, _ := mh.FromB58String(targetCID)

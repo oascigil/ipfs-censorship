@@ -173,7 +173,6 @@ func main() {
 				fmt.Println("Sleeping for a minute after launching Sybils...")
 				time.Sleep(60 * time.Second)
 			}
-			percentEclipsed := getPercentEclipsed(targetCID, sybilcidlist) // percentage of Sybil nodes in the 20 closest peers to the target CID
 
 			cid, err := gocid.Decode(targetCID)
 			if err != nil {
@@ -199,6 +198,17 @@ func main() {
 				peersString = append(peersString, pid.String())
 			}
 			fmt.Println("Closest peers:", peers)
+
+			percentEclipsed := 0.0 // percentage of Sybil nodes in the 20 closest peers to the target CID
+			for i := 0; i < len(peersString); i++ {
+				for j := 0; j < len(sybilcidlist); j++ {
+					if peersString[i] == sybilcidlist[j] {
+						percentEclipsed += 1
+					}
+				}
+			}
+			percentEclipsed = percentEclipsed / 20 * 100
+
 			detResult, err := dhtClient.EclipseDetectionVerbose(ctx, multih, peers)
 			if err != nil {
 				fmt.Println("Error in eclipse detection:", err)
