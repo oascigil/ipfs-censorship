@@ -55,6 +55,8 @@ export PATH=$PATH:/usr/local/go/bin
 ```
 Note: Changes made to a profile file may not apply until the next time you log into your computer. To apply the changes immediately, just run the shell commands directly or execute them from the profile using a command such as source $HOME/.profile.
 
+If you ever find the error "Command 'go' not found", try running the above command again to update the PATH variable.
+
 1. Verify that you've installed Go by opening a command prompt and typing the following command:
 ```
 go version
