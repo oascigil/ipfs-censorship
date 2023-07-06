@@ -223,7 +223,10 @@ func main() {
 			RegionSize:         regionSize,
 			ProvideLatencyMs:   provideLat,
 			FindProvsLatencyMs: findprovsLat,
+			ProvideMitLatencyMs:   provideMitLat,
+			FindProvsMitLatencyMs: findprovsMitLat,
 			NumProvsFound:      numProvsFound,
+			NumProvsFoundMit:   numProvsFoundMit,
 		}
 		experimentJSON, err := json.Marshal(experiment)
 		if err != nil {
