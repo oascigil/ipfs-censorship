@@ -19,7 +19,7 @@ args = argParser.parse_args()
 
 fixed_threshold = 0.94
 
-sybilNumbers = [15,20,45]
+sybilNumbers = [20,30,45]
 fileIterList = [os.path.join(args.input, "sybil" + str(numSybils) + "Combined", "*.json") for numSybils in sybilNumbers]
 
 columnwidth = 300
