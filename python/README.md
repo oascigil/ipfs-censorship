@@ -1,5 +1,10 @@
 This directory also contains Python scripts to plot all the figures in the paper, and run simulations where necessary to do so. Instructions to plot each figure are given below. The generated plots will be stored in the **plots** directory.
 
+If you are using our AWS instance to run these experiments, then you may use `scp` to copy the plots to your local machine to view them.
+```
+scp -i "ndss24-ae-#14.pem" ubuntu@ec2-35-90-112-189.us-west-2.compute.amazonaws.com:<path to plots> ./
+```
+
 Check if the virtual environment created during setup is active (you see `(env)` before your command prompt). If not, run
 ```
 cd python
