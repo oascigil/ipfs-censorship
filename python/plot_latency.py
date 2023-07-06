@@ -90,7 +90,8 @@ if os.path.exists(filename):
 print("Number of sybils: 45")
 print("Provide (mitigation) latency: " + str(np.mean(provideMit45)) + " ms")
 print("FindProviders (mitigation) latency: " + str(np.mean(findProvsMit45)) + " ms")
-print("Find 1 provider (mitigation) latency: " + str(np.mean(find1ProvMit45)) + " ms")
+if len(find1ProvMit45) > 0:
+        print("Find 1 provider (mitigation) latency: " + str(np.mean(find1ProvMit45)) + " ms")
 
 print("")
 print("Number of sybils: 0 (no attack)")
@@ -98,5 +99,7 @@ print("Provide (default) latency: " + str(np.mean(provideDefault0)) + " ms")
 print("Provide (mitigation) latency: " + str(np.mean(provideMit0)) + " ms")
 print("FindProviders (default) latency: " + str(np.mean(findProvsDefault0)) + " ms")
 print("FindProviders (mitigation) latency: " + str(np.mean(findProvsMit0)) + " ms")
-print("Find 1 provider (default) latency: " + str(np.mean(find1ProvDefault0)) + " ms")
-print("Find 1 provider (mitigation) latency: " + str(np.mean(find1ProvMit0)) + " ms")
+if len(find1ProvDefault0) > 0:
+        print("Find 1 provider (default) latency: " + str(np.mean(find1ProvDefault0)) + " ms")
+if len(find1ProvMit0) > 0:
+        print("Find 1 provider (mitigation) latency: " + str(np.mean(find1ProvMit0)) + " ms")
