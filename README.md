@@ -6,7 +6,7 @@ chmod 400 ndss24-ae-#14.pem
 ```
 To log in to the AWS instance, use the command
 ```
-ssh -i "ndss24-ae-#14.pem" ubuntu@ec2-54-149-215-250.us-west-2.compute.amazonaws.com
+ssh -i "ndss24-ae-#14.pem" ubuntu@ec2-35-90-112-189.us-west-2.compute.amazonaws.com
 ```
 ## Network Setup
 If you are using the AWS machine mentioned above, then you can skip this step.
