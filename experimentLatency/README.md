@@ -1,7 +1,9 @@
-`cd` into this directory, that is `experimentCombined`
+This folder contains the experiment to measure the latency of the `Provide` and `FindProviders` operations under the default and mitigation modes. Follow the steps below to run the experiment and collect the results. Then follow the instructions in **./python/** to read the results and generate data for Table II in the paper.
 
 ## Run experiment
-Run IPFS daemon in parallel
+In a terminal, make sure your working directory is this directory, that is `experimentCombined`.
+
+Run IPFS daemon in parallel in a different terminal window. If you are running this on a remote machine, you can start a `tmux` or `screen` session and running the following command on one window.
 ```
 ../common/kubo/cmd/ipfs/ipfs daemon
 ```
@@ -9,16 +11,24 @@ Compile experiment
 ```
 cd experiment
 go build
-cd ..
 ```
-Run experiment
+Run two different experiments for no attack (0 sybils) and attack (45 sybils).
 ```
-./experiment/main -clients 5 -runs 10 -sybils 0 -region 20 -outpath "experiment_results/sybil0LatencySpecial20"
+./main -clients 1 -runs 5 -sybils 45 -region 20 -outpath "../latency_results_new/sybil0Latency"
+./main -clients 1 -runs 5 -sybils 0 -region 20 -outpath "../latency_results_new/sybil0Latency"
 ```
-Use the flag `-mitigation` to enable mitigation, otherwise it is disabled. You may change the number of and clients and runs. You should do at least 2 runs per client and discard the first value because in the first experiment, the client makes several queries to initializes its network size estimate leading to additional latency. For subsequent runs, this cost is absent. You may repeat the experiment for different number of Sybils (0 and 45) to generate all the required data. Change `outpath` accordingly.
+Do not change the output paths because the python script in the next step looks for exactly these filenames.
+You should do at least 2 runs per client and discard the first value because in the first experiment, the client makes several queries to initializes its network size estimate leading to additional latency. For subsequent runs, this cost is absent.
 
+To measure the latency of finding only one provider, you need to change `dht.bucketSize` to `1` in the function `FindProviders()` in **./common/go-libp2p-kad-dht/routing.go**. Then run `go build` again, and run the following two experiments:
+```
+./main -clients 1 -runs 5 -sybils 45 -region 20 -outpath "../latency_results_new/sybil0LatencyProvider1"
+./main -clients 1 -runs 5 -sybils 0 -region 20 -outpath "../latency_results_new/sybil0LatencyProvider1"
+```
+Remember to change `1` back to `dht.bucketSize` so that it does not affect the other experiments.
 ## Compute average latencies
+Head over to the **./python/** directory and see instructions there to calculate average latencies for each call and generate data for Table II in the paper.
 ```
-python plotLatency.py
+cd ../../python
+python3 plotLatency.py --input "../latency_results_new"
 ```
-Change the variable `numSybils` in `plotLatency.py` to see the statistics under attack and without attack

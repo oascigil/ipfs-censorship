@@ -88,3 +88,7 @@ python3 plot_mitigation_Figs13-15.py --input "../experimentCombined/mitigation_r
 ```
 If you have run the experiment in **experimentCombined/** and have generated new results, give the path to that folder after `--input`.
 (Note that the detection and mitigation results we have provided are in different folders because we ran the experiments separately. But if you have run the experiment in **experimentCombined**, then you would be using the same `--input` path for Figs. 7, 10, 11 and 13-15.)
+### Table II
+```
+python3 plotLatency.py --input "../experimentLatency/latency_results_new"
+```
