@@ -85,6 +85,7 @@ def sybil_generation_time(ec_filename = './simulation_results/timing_eddsa.csv',
 
 def main():
     sybil_generation_time()
+    plt.savefig('./plots/sybil_generation_time.pdf', bbox_inches='tight')
     plt.show()
 
 if __name__ == '__main__':

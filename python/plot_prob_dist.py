@@ -40,5 +40,5 @@ plt.legend()
 if args.output is not None:
     if not os.path.exists("plots"):
         os.makedirs("plots")
-    plt.savefig(os.path.join("plots", args.output))
+    plt.savefig(os.path.join("plots", args.output), bbox_inches='tight')
 plt.show()
