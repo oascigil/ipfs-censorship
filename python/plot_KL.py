@@ -14,7 +14,7 @@ matplotlib.rcParams["figure.figsize"] = default_figsize
 
 argParser = argparse.ArgumentParser()
 argParser.add_argument("-o", "--output", help="output filename")
-argParser.add_argument("-i", "--input", help="input experiment results path", default="../experimentCombined/experiment_results")
+argParser.add_argument("-i", "--input", help="input experiment results path", default="../experimentCombined/detection_results")
 args = argParser.parse_args()
 
 fixed_threshold = 0.94

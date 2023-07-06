@@ -38,7 +38,7 @@ from style import *
 # Take a commandline argument for the output file name
 argParser = argparse.ArgumentParser()
 argParser.add_argument("-o", "--output", help="output filename")
-argParser.add_argument("-i", "--input", help="input experiment results path", default="../experimentCombined/experiment_results")
+argParser.add_argument("-i", "--input", help="input experiment results path", default="../experimentCombined/detection_results")
 argParser.add_argument("-s", "--sybils", help="list of sybil counts to plot", nargs='+', type=int, default=[15,20,25,30,35,40,45])
 args = argParser.parse_args()
 

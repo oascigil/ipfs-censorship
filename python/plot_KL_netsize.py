@@ -7,7 +7,6 @@ import argparse
 from utils import *
 
 from style import *
-from graphs import *
 
 matplotlib.rcParams["figure.figsize"] = default_figsize
 ylim = (0, 10)

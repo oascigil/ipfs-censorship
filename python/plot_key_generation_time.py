@@ -6,22 +6,7 @@ from subprocess import PIPE, Popen
 from matplotlib.ticker import FuncFormatter
 
 from style import *
-
-
-
-# Define a custom formatting function
-def human_readable_formatter(x, pos):
-    """
-    Custom formatting function to convert tick values to human-readable names.
-    For example, 1000 will be converted to '1K', and 1500000 will be converted to '1.5M'.
-    """
-    if x >= 1e6:
-        return f"{x/1e6:.1f}M"
-    elif x >= 1e3:
-        return f"{x/1e3:.0f}K"
-    else:
-        return f"{x:.0f}"
-
+from utils import human_readable_formatter
 
 def sybil_generation_time(ec_filename = './simulation_results/timing_eddsa.csv', rsa_filename = './simulation_results/timing_rsa.csv'):
     if(not os.path.exists(rsa_filename) or not os.path.exists(ec_filename)):
