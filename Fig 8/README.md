@@ -15,7 +15,7 @@ The second instance can now launch the censorship, logging the time taken for al
 ```
 go run main.go <sybilnumber> <filename>
 ```
-The results log the time taken to generate the Sybil keys, time for the eclipse to be successful (defined as 3 hours eclipsed in a row), the number of eclipsed queries per hour (out of 5 tries), and the percentage of closest 20 DHT nodes which are our Sybils.
+The results log the time taken to generate the Sybil keys, time for the eclipse to be successful (defined as 3 hours eclipsed in a row), the number of eclipsed queries per hour (out of 5 tries), and the percentage of closest 20 DHT nodes which are our Sybils. These results can be plotted by taking the average of the eclipsed queries over a large number of data points, and plotting how they change as a percentage of the total tries. 
 
 Note that this experiment takes a long time as it checks hourly (up to 50 hours) if the cid is censored, for a large number of cids.
 
