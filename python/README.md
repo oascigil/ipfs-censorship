@@ -42,7 +42,11 @@ To generate this figure using our provided results, run
 ```
 python plot_attack_prob.py --output "attack_success_rate.pdf" --input "../experimentCombined/detection_results" --sybils 15 20 25 30 35 40 45
 ```
-If you have run the experiment in **experimentCombined/** and have generated new results, give the path to that folder after `--input`. Use `--sybils` to choose which values of number of Sybils you see on the X-axis. Use only those values for which you have experiment results in the specified `--input` path.
+If you have run the experiment in **experimentCombined/** as per the instructions, then use
+```
+python plot_attack_prob.py --output "attack_success_rate.pdf" --input "../experimentCombined/experiment_results_new" --sybils 20 30 40 45
+```
+Use `--sybils` to choose which values of number of Sybils you see on the X-axis. Use only those values for which you have experiment results in the specified `--input` path.
 ### Fig. 9
 Below you can find instructions to (i) run experiments to generate data to plot Figure 9 and (ii) to generate the plots.
 #### Generating data
@@ -65,13 +69,19 @@ To generate this figure using our provided results, run
 ```
 python plot_accuracy.py --output "fp-fn.pdf" --input "../experimentCombined/detection_results"
 ```
-If you have run the experiment in **experimentCombined/** and have generated new results, give the path to that folder after `--input`.
+If you have run the experiment in **experimentCombined/**, then use
+```
+python plot_accuracy.py --output "fp-fn.pdf" --input "../experimentCombined/experiment_results_new"
+```
 ### Fig. 11
 To generate this figure using our provided results, run
 ```
 python plot_KL.py --output "KLs.pdf" --input "../experimentCombined/detection_results"
 ```
-If you have run the experiment in **experimentCombined/** and have generated new results, give the path to that folder after `--input`.
+If you have run the experiment in **experimentCombined/**, then use
+```
+python plot_KL.py --output "KLs.pdf" --input "../experimentCombined/experiment_results_new"
+```
 ### Fig. 12
 Run simulation
 ```
@@ -86,7 +96,10 @@ To generate this figure using our provided results, run
 ```
 python3 plot_mitigation_Figs13-15.py --input "../experimentCombined/mitigation_results"
 ```
-If you have run the experiment in **experimentCombined/** and have generated new results, give the path to that folder after `--input`.
+If you have run the experiment in **experimentCombined/**, then use
+```
+python3 plot_mitigation_Figs13-15.py --input "../experimentCombined/experiment_results_new"
+```
 (Note that the detection and mitigation results we have provided are in different folders because we ran the experiments separately. But if you have run the experiment in **experimentCombined**, then you would be using the same `--input` path for Figs. 7, 10, 11 and 13-15.)
 ### Table II
 ```
