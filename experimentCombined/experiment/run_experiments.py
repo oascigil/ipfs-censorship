@@ -1,6 +1,6 @@
 import subprocess 
 
-num_sybils = [0, 20, 30, 40, 45]
+num_sybils = [45, 40, 30, 20, 0]
 region_sizes = [20]
 
 for regSize in region_sizes:
