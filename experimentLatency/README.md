@@ -14,7 +14,7 @@ go build
 ```
 Run two different experiments for no attack (0 sybils) and attack (45 sybils).
 ```
-./main -clients 1 -runs 5 -sybils 45 -region 20 -outpath "../latency_results_new/sybil0Latency"
+./main -clients 1 -runs 5 -sybils 45 -region 20 -outpath "../latency_results_new/sybil45Latency"
 ./main -clients 1 -runs 5 -sybils 0 -region 20 -outpath "../latency_results_new/sybil0Latency"
 ```
 Do not change the output paths because the python script in the next step looks for exactly these filenames.
@@ -22,7 +22,7 @@ You should do at least 2 runs per client and discard the first value because in 
 
 To measure the latency of finding only one provider, you need to change `dht.bucketSize` to `1` in the function `FindProviders()` in **./common/go-libp2p-kad-dht/routing.go**. Then run `go build` again, and run the following two experiments:
 ```
-./main -clients 1 -runs 5 -sybils 45 -region 20 -outpath "../latency_results_new/sybil0LatencyProvider1"
+./main -clients 1 -runs 5 -sybils 45 -region 20 -outpath "../latency_results_new/sybil45LatencyProvider1"
 ./main -clients 1 -runs 5 -sybils 0 -region 20 -outpath "../latency_results_new/sybil0LatencyProvider1"
 ```
 Remember to change `1` back to `dht.bucketSize` so that it does not affect the other experiments.
