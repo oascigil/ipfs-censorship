@@ -8,6 +8,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"time"
@@ -149,27 +150,30 @@ func main() {
 			targetCID = strings.ReplaceAll(targetCID, "\n", "")
 			fmt.Printf("Target CID: '%s'\n", targetCID)
 
-			out := getCurrentClosest(targetCID)
-			temp := strings.Split(strings.TrimSpace(out), "\n")
-			if out == "" {
-				fmt.Println("Could not get closest nodes in DHT, skipping...")
-				eclipses -= 1 // Try again with a different CID
-				continue
-			}
-			currentClosest := temp[0]
-			peerIdList := temp[1:]
-			fmt.Println("Current Closest:", currentClosest)
-			fmt.Println("Peer List:", peerIdList)
-
-			pkeylist, sybilcidlist, err := attackCID(targetCID, currentClosest, peerIdList, numOfSybils)
-			if err != nil {
-				fmt.Println("Took too long to generate Sybil IDs, skipping...")
-				fmt.Println(err)
-				eclipses -= 1
-				continue
-			}
-			sybils := launchSybils(pkeylist, sybilcidlist)
+			var sybilcidlist []string
+			var sybils []*exec.Cmd
 			if numOfSybils > 0 {
+				out, err := getCurrentClosest(targetCID, 120 * time.Second)
+				temp := strings.Split(strings.TrimSpace(out), "\n")
+				if out == "" || err != nil {
+					fmt.Println("Could not get closest nodes in DHT, skipping...")
+					eclipses -= 1 // Try again with a different CID
+					continue
+				}
+				currentClosest := temp[0]
+				peerIdList := temp[1:]
+				fmt.Println("Current Closest:", currentClosest)
+				fmt.Println("Peer List:", peerIdList)
+
+				var pkeylist []string
+				pkeylist, sybilcidlist, err = attackCID(targetCID, currentClosest, peerIdList, numOfSybils)
+				if err != nil {
+					fmt.Println("Took too long to generate Sybil IDs, skipping...")
+					fmt.Println(err)
+					eclipses -= 1
+					continue
+				}
+				sybils = launchSybils(pkeylist, sybilcidlist)
 				fmt.Println("Sleeping for a minute after launching Sybils...")
 				time.Sleep(60 * time.Second)
 			}
@@ -182,7 +186,8 @@ func main() {
 			}
 			multih := cid.Hash()
 
-			peers, err := dhtClient.GetClosestPeers(ctx, string(multih))
+			ctxWithTimeout, _ := context.WithTimeout(ctx, 600*time.Second)
+			peers, err := dhtClient.GetClosestPeers(ctxWithTimeout, string(multih))
 			if err != nil {
 				fmt.Println("Error getting closest peers:", err)
 				appendErrorJSON(&writeJSON, err.Error())
@@ -209,7 +214,8 @@ func main() {
 			}
 			percentEclipsed = percentEclipsed / 20 * 100
 
-			detResult, err := dhtClient.EclipseDetectionVerbose(ctx, multih, peers)
+			ctxWithTimeout, _ = context.WithTimeout(ctx, 600*time.Second)
+			detResult, err := dhtClient.EclipseDetectionVerbose(ctxWithTimeout, multih, peers)
 			if err != nil {
 				fmt.Println("Error in eclipse detection:", err)
 				appendErrorJSON(&writeJSON, err.Error())
@@ -220,7 +226,8 @@ func main() {
 			fmt.Println("Providing content...")
 			dhtClient.DisableMitigation()
 			dhtProvider.DisableMitigation()
-			err, discoveredPeersUnmit, updatedPeersUnmit, _ := dhtProvider.ProvideWithReturn(ctx, cid, true)
+			ctxWithTimeout, _ = context.WithTimeout(ctx, 600*time.Second)
+			err, discoveredPeersUnmit, updatedPeersUnmit, _ := dhtProvider.ProvideWithReturn(ctxWithTimeout, cid, true)
 			if err != nil {
 				fmt.Println("Error providing content:", err)
 				appendErrorJSON(&writeJSON, err.Error())
@@ -228,7 +235,8 @@ func main() {
 			}
 
 			// Check if attack succeeded
-			provAddrInfosUnmit, contactedPeersUnmit, respondedPeersUnmit, err := dhtClient.FindProvidersReturnOnPathNodes(ctx, cid)
+			ctxWithTimeout, _ = context.WithTimeout(ctx, 600*time.Second)
+			provAddrInfosUnmit, contactedPeersUnmit, respondedPeersUnmit, err := dhtClient.FindProvidersReturnOnPathNodes(ctxWithTimeout, cid)
 			if err != nil {
 				fmt.Println("Error finding providers:", err)
 				appendErrorJSON(&writeJSON, err.Error())
@@ -268,7 +276,8 @@ func main() {
 				dhtProvider.EnableMitigation()
 				fmt.Println("Providing content with mitigation...")
 				var discoveredPeers []peer.ID
-				err, discoveredPeers, updatedPeers, numLookups = dhtProvider.ProvideWithReturn(ctx, cid, true)
+				ctxWithTimeout, _ = context.WithTimeout(ctx, 600*time.Second)
+				err, discoveredPeers, updatedPeers, numLookups = dhtProvider.ProvideWithReturn(ctxWithTimeout, cid, true)
 				if err != nil {
 					fmt.Println("Error providing content:", err)
 					appendErrorJSON(&writeJSON, err.Error())
@@ -277,7 +286,8 @@ func main() {
 
 				// Check if mitigation succeeded
 				var respondedPeers []peer.ID
-				provAddrInfos, contactedPeers, respondedPeers, err = dhtClient.FindProvidersReturnOnPathNodes(ctx, cid)
+				ctxWithTimeout, _ = context.WithTimeout(ctx, 600*time.Second)
+				provAddrInfos, contactedPeers, respondedPeers, err = dhtClient.FindProvidersReturnOnPathNodes(ctxWithTimeout, cid)
 				if err != nil {
 					fmt.Println("Error finding providers:", err)
 					appendErrorJSON(&writeJSON, err.Error())
@@ -390,10 +400,11 @@ func main() {
 			}
 			writeJSON = append(writeJSON, experimentJSON...)
 			writeJSON = append(writeJSON, '\n')
-
-			killSybils(sybils)
-			fmt.Println("Sleeping for ten seconds after killing Sybils...")
-			time.Sleep(10 * time.Second)
+			if numOfSybils > 0 {
+				killSybils(sybils)
+				fmt.Println("Sleeping for ten seconds after killing Sybils...")
+				time.Sleep(10 * time.Second)
+			}
 		}
 		dhtClient.Close()
 		dhtProvider.Close()
