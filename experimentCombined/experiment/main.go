@@ -8,6 +8,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"os/signal"
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -161,6 +162,7 @@ func main() {
 
 			var sybilcidlist []string
 			var sybils []*exec.Cmd
+			var sybilsKilled chan struct{}
 			if numOfSybils > 0 {
 				out, err := getCurrentClosest(targetCID, 120 * time.Second)
 				temp := strings.Split(strings.TrimSpace(out), "\n")
@@ -183,6 +185,21 @@ func main() {
 					continue
 				}
 				sybils = launchSybils(pkeylist, sybilcidlist)
+				
+				// kill sybils if the program is interrupted, otherwise these sybils will interfere with the next time the experiment is run
+				c := make(chan os.Signal)
+				signal.Notify(c, os.Interrupt)
+				sybilsKilled = make(chan struct{})
+				go func() {
+					select {
+					case sig := <-c:
+						fmt.Printf("Got %s signal. Killing Sybils before exiting...\n", sig)
+						killSybils(sybils)
+						os.Exit(1)
+					case <-sybilsKilled:
+						return
+					}
+				}()
 				fmt.Println("Sleeping for a minute after launching Sybils...")
 				time.Sleep(60 * time.Second)
 			}
@@ -194,6 +211,9 @@ func main() {
 				appendErrorJSON(&writeJSON, err.Error())
 				if numOfSybils > 0 {
 					killSybils(sybils)
+					close(sybilsKilled)
+					fmt.Println("Sleeping for ten seconds after killing Sybils...")
+					time.Sleep(10 * time.Second)
 				}
 				continue
 			}
@@ -202,6 +222,9 @@ func main() {
 				appendErrorJSON(&writeJSON, "0 closest peers found")
 				if numOfSybils > 0 {
 					killSybils(sybils)
+					close(sybilsKilled)
+					fmt.Println("Sleeping for ten seconds after killing Sybils...")
+					time.Sleep(10 * time.Second)
 				}
 				continue
 			}
@@ -228,6 +251,9 @@ func main() {
 				appendErrorJSON(&writeJSON, err.Error())
 				if numOfSybils > 0 {
 					killSybils(sybils)
+					close(sybilsKilled)
+					fmt.Println("Sleeping for ten seconds after killing Sybils...")
+					time.Sleep(10 * time.Second)
 				}
 				continue
 			}
@@ -243,6 +269,9 @@ func main() {
 				appendErrorJSON(&writeJSON, err.Error())
 				if numOfSybils > 0 {
 					killSybils(sybils)
+					close(sybilsKilled)
+					fmt.Println("Sleeping for ten seconds after killing Sybils...")
+					time.Sleep(10 * time.Second)
 				}
 				continue
 			}
@@ -255,6 +284,9 @@ func main() {
 				appendErrorJSON(&writeJSON, err.Error())
 				if numOfSybils > 0 {
 					killSybils(sybils)
+					close(sybilsKilled)
+					fmt.Println("Sleeping for ten seconds after killing Sybils...")
+					time.Sleep(10 * time.Second)
 				}
 				continue
 			}
@@ -298,6 +330,9 @@ func main() {
 					fmt.Println("Error providing content:", err)
 					appendErrorJSON(&writeJSON, err.Error())
 					killSybils(sybils)
+					close(sybilsKilled)
+					fmt.Println("Sleeping for ten seconds after killing Sybils...")
+					time.Sleep(10 * time.Second)
 					continue
 				}
 
@@ -309,6 +344,9 @@ func main() {
 					fmt.Println("Error finding providers:", err)
 					appendErrorJSON(&writeJSON, err.Error())
 					killSybils(sybils)
+					close(sybilsKilled)
+					fmt.Println("Sleeping for ten seconds after killing Sybils...")
+					time.Sleep(10 * time.Second)
 					continue
 				}
 
@@ -420,6 +458,9 @@ func main() {
 			writeJSON = append(writeJSON, '\n')
 			if numOfSybils > 0 {
 				killSybils(sybils)
+				close(sybilsKilled)
+				fmt.Println("Sleeping for ten seconds after killing Sybils...")
+				time.Sleep(10 * time.Second)
 			}
 		}
 		dhtClient.Close()
