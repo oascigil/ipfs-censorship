@@ -65,6 +65,8 @@ func killSybils(sybils []*exec.Cmd) {
 		}
 		cmd.Wait()
 	}
+	fmt.Println("Sleeping for ten seconds after killing Sybils...")
+	time.Sleep(10 * time.Second)
 }
 
 func launchSybils(privKeyList []string, pubkeylist []string) []*exec.Cmd {
