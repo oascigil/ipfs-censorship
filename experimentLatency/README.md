@@ -18,7 +18,7 @@ Run two different experiments for no attack (0 sybils) and attack (45 sybils).
 ./main -clients 1 -runs 5 -sybils 0 -region 20 -outpath "../latency_results_new/sybil0Latency"
 ```
 Do not change the output paths because the python script in the next step looks for exactly these filenames.
-You should do at least 2 runs per client and discard the first value because in the first experiment, the client makes several queries to initializes its network size estimate leading to additional latency. For subsequent runs, this cost is absent.
+You should do at least 2 runs per client and discard the first value because in the first experiment, the client makes several queries to initializes its network size estimate leading to additional latency. For subsequent runs, this cost is absent. In all cases, the run aborts if the latency exceeds 5 minutes.
 
 To measure the latency of finding only one provider, you need to change `dht.bucketSize` to `1` in the function `FindProviders()` in **./common/go-libp2p-kad-dht/routing.go**. Then run `go build` again, and run the following two experiments:
 ```

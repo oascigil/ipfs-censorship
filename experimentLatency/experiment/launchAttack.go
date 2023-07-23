@@ -14,6 +14,7 @@ import (
 	"os/exec"
 	"strconv"
 	"time"
+	"context"
 
 	"github.com/schollz/progressbar/v3"
 	// "encoding/csv"
@@ -39,17 +40,11 @@ func getCIDWithoutAdding(filename string) []byte {
 	return out
 }
 
-func addCID(filename string) error {
+func getCurrentClosest(CID string, timeout time.Duration) (string, error) {
 	// Requires IPFS daemon to be running
-	cmd := exec.Command(IPFS_PATH, "add", filename)
-	err := cmd.Run()
-
-	return err
-}
-
-func getCurrentClosest(CID string) string {
-	// Requires IPFS daemon to be running
-	cmd := exec.Command(IPFS_PATH, "dht", "query", CID)
+	ctxWithTimeout, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+	cmd := exec.CommandContext(ctxWithTimeout, IPFS_PATH, "dht", "query", CID)
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
@@ -58,10 +53,10 @@ func getCurrentClosest(CID string) string {
 	if err != nil {
 		log.Printf("getCurrentClosest() with CID: %s failed", CID)
 		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
-		log.Fatal(err)
+		// log.Fatal(err)
 	}
 
-	return out.String()
+	return out.String(), err
 }
 
 func killSybils(sybils []*exec.Cmd) {

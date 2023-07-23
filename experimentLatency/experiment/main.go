@@ -8,6 +8,8 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"os/signal"
+	"os/exec"
 	"strings"
 	"time"
 
@@ -48,6 +50,7 @@ func Init() {
 const (
 	clientDHT = false
 	serverDHT = true
+	timeOutSecs = 300
 )
 
 func main() {
@@ -118,36 +121,55 @@ func main() {
 			targetCID = strings.ReplaceAll(targetCID, "\n", "")
 			fmt.Printf("Target CID: '%s'\n", targetCID)
 
-			out := getCurrentClosest(targetCID)
-			temp := strings.Split(strings.TrimSpace(out), "\n")
-			if out == "" {
-				fmt.Println("Could not get closest nodes in DHT, skipping...")
-				runs -= 1
-				continue
-			}
-			currentClosest := temp[0]
-			peerIdList := temp[1:]
-			fmt.Println("Current Closest:", currentClosest)
-			fmt.Println("Peer List:", peerIdList)
-
-			pkeylist, sybilcidlist, err := attackCID(targetCID, currentClosest, peerIdList, numOfSybils)
-			if err != nil {
-				fmt.Println("Took too long to generate Sybil IDs, skipping...")
-				fmt.Println(err)
-				runs -= 1
-				continue
-			}
-			sybils := launchSybils(pkeylist, sybilcidlist)
-			if numOfSybils > 0 {
-				fmt.Println("Sleeping for a minute after launching Sybils...")
-				time.Sleep(60 * time.Second)
-			}
-
 			cid, err := gocid.Decode(targetCID)
 			if err != nil {
 				fmt.Printf("Failed to decode cid %s\n", targetCID)
 				runs -= 1
 				continue
+			}
+
+			var sybilcidlist []string
+			var sybils []*exec.Cmd
+			var sybilsKilled chan struct{}
+			if numOfSybils > 0 {
+				out, err := getCurrentClosest(targetCID, 120 * time.Second)
+				temp := strings.Split(strings.TrimSpace(out), "\n")
+				if out == "" || err != nil {
+					fmt.Println("Could not get closest nodes in DHT, skipping...")
+					runs -= 1 // Try again with a different CID
+					continue
+				}
+				currentClosest := temp[0]
+				peerIdList := temp[1:]
+				fmt.Println("Current Closest:", currentClosest)
+				fmt.Println("Peer List:", peerIdList)
+
+				var pkeylist []string
+				pkeylist, sybilcidlist, err = attackCID(targetCID, currentClosest, peerIdList, numOfSybils)
+				if err != nil {
+					fmt.Println("Took too long to generate Sybil IDs, skipping...")
+					fmt.Println(err)
+					runs -= 1
+					continue
+				}
+				sybils = launchSybils(pkeylist, sybilcidlist)
+
+				// kill sybils if the program is interrupted, otherwise these sybils will interfere with the next time the experiment is run
+				c := make(chan os.Signal)
+				signal.Notify(c, os.Interrupt)
+				sybilsKilled = make(chan struct{})
+				go func() {
+					select {
+					case sig := <-c:
+						fmt.Printf("Got %s signal. Killing Sybils before exiting...\n", sig)
+						killSybils(sybils)
+						os.Exit(1)
+					case <-sybilsKilled:
+						return
+					}
+				}()
+				fmt.Println("Sleeping for a minute after launching Sybils...")
+				time.Sleep(60 * time.Second)
 			}
 
 			if numOfSybils == 0 {
@@ -156,8 +178,9 @@ func main() {
 				fmt.Println("Providing content...")
 				dhtClient.DisableMitigation()
 				dhtProvider.DisableMitigation()
+				ctxWithTimeout, _ := context.WithTimeout(ctx, timeOutSecs*time.Second)
 				startTime := time.Now()
-				err = dhtProvider.Provide(ctx, cid, true)
+				err = dhtProvider.Provide(ctxWithTimeout, cid, true)
 				thisLat := int32(time.Since(startTime).Milliseconds())
 				fmt.Println("Finished provide")
 				fmt.Println("Provide latency:", thisLat)
@@ -168,8 +191,9 @@ func main() {
 				provideLat = append(provideLat, thisLat)
 
 				// Find providers without mitigation
+				ctxWithTimeout, _ = context.WithTimeout(ctx, timeOutSecs*time.Second)
 				startTime = time.Now()
-				provs, err := dhtClient.FindProviders(ctx, cid)
+				provs, err := dhtClient.FindProviders(ctxWithTimeout, cid)
 				thisLat = int32(time.Since(startTime).Milliseconds())
 				fmt.Println("Finished find providers")
 				if err != nil {
@@ -185,33 +209,50 @@ func main() {
 			dhtClient.EnableMitigation()
 			dhtProvider.EnableMitigation()
 			fmt.Println("Providing content with mitigation...")
+			ctxWithTimeout, _ := context.WithTimeout(ctx, timeOutSecs*time.Second)
 			startTime := time.Now()
-			err = dhtProvider.Provide(ctx, cid, true)
+			err = dhtProvider.Provide(ctxWithTimeout, cid, true)
 			thisLat := int32(time.Since(startTime).Milliseconds())
 			fmt.Println("Finished provide with mitigation")
 			if err != nil {
 				fmt.Println(err)
+				if numOfSybils > 0 {
+					killSybils(sybils)
+					close(sybilsKilled)
+					fmt.Println("Sleeping for ten seconds after killing Sybils...")
+					time.Sleep(10 * time.Second)
+				}
 				continue
 			}
 			fmt.Println("Provide latency with mitigation:", thisLat)
 			provideMitLat = append(provideMitLat, thisLat)
 
 			// Find providers with mitigation
+			ctxWithTimeout, _ = context.WithTimeout(ctx, timeOutSecs*time.Second)
 			startTime = time.Now()
-			provs, err := dhtClient.FindProviders(ctx, cid)
+			provs, err := dhtClient.FindProviders(ctxWithTimeout, cid)
 			thisLat = int32(time.Since(startTime).Milliseconds())
 			fmt.Println("Finished find providers with mitigation")
 			if err != nil {
 				fmt.Println(err)
+				if numOfSybils > 0 {
+					killSybils(sybils)
+					close(sybilsKilled)
+					fmt.Println("Sleeping for ten seconds after killing Sybils...")
+					time.Sleep(10 * time.Second)
+				}
 				continue
 			}
 			fmt.Println("Find providers latency with mitigation:", thisLat)
 			findprovsMitLat = append(findprovsMitLat, thisLat)
 			numProvsFoundMit = append(numProvsFoundMit, len(provs))
 
-			killSybils(sybils)
-			fmt.Println("Sleeping for ten seconds after killing Sybils...")
-			time.Sleep(10 * time.Second)
+			if numOfSybils > 0 {
+				killSybils(sybils)
+				close(sybilsKilled)
+				fmt.Println("Sleeping for ten seconds after killing Sybils...")
+				time.Sleep(10 * time.Second)
+			}
 		}
 		dhtProvider.Close()
 		dhtClient.Close()
