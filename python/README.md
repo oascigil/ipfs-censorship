@@ -38,7 +38,7 @@ Once you run `./k_closests.sh`, the script will create temporary `*.log` files w
 You need to manually rename the `k_closest.dat` to the libp2p version you've used. For instance, `mv k_closest.dat k_closest_kubo_0_23.dat`
 
 #### Plotting
-To plot the data, simply run `python3 k_closest.py`. The script will automatically read `./simulation_results/k_closest_kubo_0_23.dat` and `./simulation_results/k_closest_kubo_0_17.dat` files and display the graph. We provide files from our tests in the `./simulation_results/` folder.
+To plot the data, simply run `python3 k_closests.py`. The script will automatically read `./simulation_results/k_closest_kubo_0_23.dat` and `./simulation_results/k_closest_kubo_0_17.dat` files and display the graph. We provide files from our tests in the `./simulation_results/` folder.
 
 
 
