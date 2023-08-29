@@ -1,22 +1,22 @@
 Things to do:
 
 Code:
-- The requirements.txt is mentioned here. Please make it clear in the steps provided in the readme file.
 - Some folders needed to be manually created before running the experiments. Please automate that as part of the scripts. 
 - Please fix the mkdir for the *experiment_results_new/* folder. It created *experiment_results/new/* for me in the first run for some reason.
 - reorganize the readme files (perhaps keep only 1 single file with sections).
-- I suggest the authors change all commands to "python3"
-- When generating new results for reproducing Fig.9, I received the following error.
-"""
-$ go run measureGenerateSybilKeys rsa > timing rsa.csv
-github.com/libp2p/go-libp2p-kad-dht@v0.18.0 (replaced by ../../common/go-libp2p-kad-dht): reading ../../common/go-libp2p-kad-dht/go.mod: open /home/ubuntu/common/go-libp2p-kad-dht/go.mod: no such file or directory
-"""
-- I suggest the authors move this package installation requirement into the preparation phase.
-- I suggest the authors add "mkdir plots" before the reproducing commands.
 - I suggest the authors add "import os" to the beginning of "plot_KL_netsize.py".
 - In `Fig. 6`, directly editing go.mod and executing `make install` doesn't work in clean environment.
 - In `Figs. 13-15`, the command will return error, ‘/’ has to be added at the end of the path.
 - Remove AWS instructions before publishing
+- (done) I suggest the authors change all commands to "python3"
+- (done) The requirements.txt is mentioned here. Please make it clear in the steps provided in the readme file.
+- (done) I suggest the authors move this package installation requirement into the preparation phase.
+- (done) I suggest the authors add "mkdir plots" before the reproducing commands.
+- (done) When generating new results for reproducing Fig.9, I received the following error.
+"""
+$ go run measureGenerateSybilKeys rsa > timing rsa.csv
+github.com/libp2p/go-libp2p-kad-dht@v0.18.0 (replaced by ../../common/go-libp2p-kad-dht): reading ../../common/go-libp2p-kad-dht/go.mod: open /home/ubuntu/common/go-libp2p-kad-dht/go.mod: no such file or directory
+"""
 
 Appendix:
 - In section B, please fix it to Python3 for the software requirements.
