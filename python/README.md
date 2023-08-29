@@ -10,14 +10,19 @@ Check if the virtual environment created during setup is active (you see `(env)`
 cd python
 source env/bin/activate
 ```
+Install the required dependencies and create a folder for plots
+```
+python3 -m pip install -r requirements.txt
+mkdir -p plots
+```
 ### Fig. 3
 To generate Fig. 3, we use data from a crawl of the IPFS DHT. The following script processes the crawl data. This step takes about 8 minutes.
 ```
-python process_crawl_data.py
+python3 process_crawl_data.py
 ```
 Now plot the processed data.
 ```
-python plot_prob_dist.py
+python3 plot_prob_dist.py
 ```
 ### Fig. 6
 #### Getting the required software
@@ -45,11 +50,11 @@ To plot the data, simply run `python3 k_closests.py`. The script will automatica
 ### Fig. 7
 To generate this figure using our provided results, run
 ```
-python plot_attack_prob.py --output "attack_success_rate.pdf" --input "../experimentCombined/detection_results" --sybils 15 20 25 30 35 40 45
+python3 plot_attack_prob.py --output "attack_success_rate.pdf" --input "../experimentCombined/detection_results" --sybils 15 20 25 30 35 40 45
 ```
 If you have run the experiment in **experimentCombined/** as per the instructions, then use
 ```
-python plot_attack_prob.py --output "attack_success_rate.pdf" --input "../experimentCombined/experiment_results_new" --sybils 20 30 40 45
+python3 plot_attack_prob.py --output "attack_success_rate.pdf" --input "../experimentCombined/experiment_results_new" --sybils 20 30 40 45
 ```
 Use `--sybils` to choose which values of number of Sybils you see on the X-axis. Use only those values for which you have experiment results in the specified `--input` path.
 ### Fig. 9
@@ -72,29 +77,29 @@ Note that the script will look for `./simulation_results/timing_rsa.csv` and `./
 ### Fig. 10
 To generate this figure using our provided results, run
 ```
-python plot_accuracy.py --output "fp-fn.pdf" --input "../experimentCombined/detection_results"
+python3 plot_accuracy.py --output "fp-fn.pdf" --input "../experimentCombined/detection_results"
 ```
 If you have run the experiment in **experimentCombined/**, then use
 ```
-python plot_accuracy.py --output "fp-fn.pdf" --input "../experimentCombined/experiment_results_new"
+python3 plot_accuracy.py --output "fp-fn.pdf" --input "../experimentCombined/experiment_results_new"
 ```
 ### Fig. 11
 To generate this figure using our provided results, run
 ```
-python plot_KL.py --output "KLs.pdf" --input "../experimentCombined/detection_results"
+python3 plot_KL.py --output "KLs.pdf" --input "../experimentCombined/detection_results"
 ```
 If you have run the experiment in **experimentCombined/**, then use
 ```
-python plot_KL.py --output "KLs.pdf" --input "../experimentCombined/experiment_results_new"
+python3 plot_KL.py --output "KLs.pdf" --input "../experimentCombined/experiment_results_new"
 ```
 ### Fig. 12
 Run simulation
 ```
-python simulateHonEclKLs.py
+python3 simulateHonEclKLs.py
 ```
 Plot KL divergence values
 ```
-python plot_KL_netsize.py --output "KLs_netsize.pdf"
+python3 plot_KL_netsize.py --output "KLs_netsize.pdf"
 ```
 ### Figs. 13-15
 To generate this figure using our provided results, run

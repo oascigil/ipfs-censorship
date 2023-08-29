@@ -120,12 +120,12 @@ require (
 	lukechampine.com/blake3 v1.1.7 // indirect
 )
 
-replace github.com/libp2p/go-libp2p-kad-dht => ../../common/go-libp2p-kad-dht
+replace github.com/libp2p/go-libp2p-kad-dht => ../common/go-libp2p-kad-dht
 
 replace github.com/go-libp2p-kad-dht/eclipse-detection => ../eclipse-detection
 
 replace github.com/go-libp2p-kad-dht/netsize => ../netsize
 
-replace github.com/ssrivatsan97/go-libp2p-kad-dht/eclipse-detection => ../../common/go-libp2p-kad-dht/eclipse-detection
+replace github.com/ssrivatsan97/go-libp2p-kad-dht/eclipse-detection => ../common/go-libp2p-kad-dht/eclipse-detection
 
 replace github.com/ssrivatsan97/go-libp2p-kad-dht/netsize => ../go-libp2p-kad-dht/netsize
