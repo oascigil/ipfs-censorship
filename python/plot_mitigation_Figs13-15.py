@@ -27,8 +27,7 @@ def plots_with_varying_sybil_size(path = '../mitigation_experiment/logs/'):
 
     df = pd.DataFrame()
     for log in dir_list:
-        # full_path = os.path.join(path,log) + '/'
-        full_path = path + log + '/'
+        full_path = os.path.join(path,log) + '/'
         print(full_path)
         # Read the most recently added log files in the given path
         command = "ls " + full_path

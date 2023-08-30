@@ -21,8 +21,8 @@ github.com/libp2p/go-libp2p-kad-dht@v0.18.0 (replaced by ../../common/go-libp2p-
 - (done) In `Figs. 13-15`, the command will return error, ‘/’ has to be added at the end of the path.
 
 Appendix:
-- In section B, please fix it to Python3 for the software requirements.
-- in the `Experiment (E1)`, `[Results]` part, adding the instruction to look for `README.md` in the `python` folder would be nice, etc.
+- (done) In section B, please fix it to Python3 for the software requirements.
+- (done) in the `Experiment (E1)`, `[Results]` part, adding the instruction to look for `README.md` in the `python` folder would be nice, etc.
 
 Low priority:
 - I suggest adding brief descriptions for the parameters of the functions as well.

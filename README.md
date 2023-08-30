@@ -109,3 +109,5 @@ After setting up the network and dependencies as outlined in this README, do the
 To reproduce latency values (Table II) in the paper:
 1. `cd experimentLatency` and follow the instructions in **experimentLatency/README.md** to measure latency.
 1. `cd python` and follow the instructions in **python/README.md** under the heading Table II.
+
+To reproduce Figure 8, follow the instructions in **Fig 8/README.md**.
