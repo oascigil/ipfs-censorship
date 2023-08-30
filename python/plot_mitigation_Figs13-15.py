@@ -1,13 +1,10 @@
 import pandas as pd
 from matplotlib import pyplot as plt
-import matplotlib
 import os.path
 import numpy as np
 import argparse
 from subprocess import PIPE, Popen
 from style import *
-from matplotlib.ticker import FuncFormatter
-import random
 
 from style import *
 
@@ -30,7 +27,8 @@ def plots_with_varying_sybil_size(path = '../mitigation_experiment/logs/'):
 
     df = pd.DataFrame()
     for log in dir_list:
-        full_path = os.path.join(path,log) + '/'
+        # full_path = os.path.join(path,log) + '/'
+        full_path = path + log + '/'
         print(full_path)
         # Read the most recently added log files in the given path
         command = "ls " + full_path
@@ -244,6 +242,7 @@ def main():
     argParser.add_argument("-i", "--input", help="input experiment results path", default="../experimentCombined/mitigation_results/")
     args = argParser.parse_args()
     plots_with_varying_sybil_size(args.input)
+    print("Plots saved: ./plots/Lookups_vs_Sybils.pdf ./plots/Mitigation_vs_Sybils.pdf ./plots/Overhead_vs_sybils.pdf")
 
 if __name__ == '__main__':
     main()

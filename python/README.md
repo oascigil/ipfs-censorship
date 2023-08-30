@@ -64,10 +64,11 @@ go run measureGenerateSybilKeys eddsa > timing_eddsa.csv
 We provide our `./simulation_results/sample_rsa.csv` and `./simulation_results/sample_eddsa.csv` files for reference (generating RSA keys takes a while).
 
 #### Plotting
-Plot the results using:
+If you have run the experiment to generate data, plot the results using:
 `python3 plot_key_generation_time.py`
 
-Note that the script will look for `./simulation_results/timing_rsa.csv` and `./simulation_results/timing_eddsa.csv` files, so you have to generate them in advance (or use the one we provided).
+To plot the sample results that we have provided, use:
+`python3 plot_key_generation_time.py -i ./simulation_results/timing_eddsa.csv ./simulation_results/timing_rsa.csv`
 
 ### Fig. 10
 To generate this figure using our provided results, run

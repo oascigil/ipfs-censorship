@@ -2,14 +2,12 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import os
 import os.path
-import numpy as np
-from subprocess import PIPE, Popen
-from matplotlib.ticker import FuncFormatter
+import argparse
 
 from style import *
 from utils import human_readable_formatter
 
-def sybil_generation_time(ec_filename = './simulation_results/timing_eddsa.csv', rsa_filename = './simulation_results/timing_rsa.csv'):
+def sybil_generation_time(ec_filename, rsa_filename):
     if(not os.path.exists(rsa_filename) or not os.path.exists(ec_filename)):
         print("sybil_generation_time:", ec_filename, "or",  rsa_filename, "doesn't exist (or both!) - aborting")
         return
@@ -84,12 +82,18 @@ def sybil_generation_time(ec_filename = './simulation_results/timing_eddsa.csv',
     ax12.legend(loc='upper left')
     ax22.legend(loc='upper left')
 
-def main():
-    sybil_generation_time()
     if not os.path.exists("plots"):
         os.makedirs("plots")
     plt.savefig('./plots/sybil_generation_time.pdf', bbox_inches='tight')
+    print("Plots saved at ./plots/sybil_generation_time.pdf")
     plt.show()
+
+def main():
+    argParser = argparse.ArgumentParser()
+    argParser.add_argument("-i", "--input", help="input simulation results", nargs=2, default=['./simulation_results/timing_eddsa.csv', './simulation_results/timing_rsa.csv'])
+    args = argParser.parse_args()
+
+    sybil_generation_time(args.input[0], args.input[1])
 
 if __name__ == '__main__':
     main()
