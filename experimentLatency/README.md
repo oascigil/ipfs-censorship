@@ -1,3 +1,5 @@
+Please setup the network and install dependencies as per the instructions in the top-level README before running any of the steps below.
+
 This folder contains the experiment to measure the latency of the `Provide` and `FindProviders` operations under the default and mitigation modes. Follow the steps below to run the experiment and collect the results. Then follow the instructions in **./python/** to read the results and generate data for Table II in the paper.
 
 ## Run experiment

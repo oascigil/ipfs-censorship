@@ -1,3 +1,5 @@
+Please setup the network and install dependencies as per the instructions in the top-level README before running any of the steps below.
+
 This directory also contains Python scripts to plot all the figures in the paper, and run simulations where necessary to do so. Instructions to plot each figure are given below. The generated plots will be stored in the **plots** directory.
 
 Check if the virtual environment created during setup is active (you see `(env)` before your command prompt). If not, run

@@ -1,3 +1,5 @@
+Please setup the network and install dependencies as per the instructions in the top-level README before running any of the steps below.
+
 This folder contains the main experiment that runs the attack on several CIDs and DHT clients, and collects results regarding the attack, detection and mitigation. The collected results will then be used to plot Figs. 7, 10, 11, 13, 14, 15 in the paper. Follow the steps below to run the experiment and collect the results. Then follow the instructions in **./python/** to read the results and generate plots.
 ## Run experiment
 In a terminal, make sure your working directory is this directory, that is `experimentCombined`.

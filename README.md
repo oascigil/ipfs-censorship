@@ -100,4 +100,12 @@ To test that your IPFS node is set up correctly, try the following:
 1. **python/** contains code to process results collected from the above experiments and generate plots as in the paper. It also contains simulations for other results that are not obtained from the above two experiments.
 1. **Fig 8/** contains code to launch the censorship attack after the content has been provided and observe the success of the attack over a period of 50 hours (Fig. 8 in the paper).
 
-To reproduce the main results of our paper, first follow the instructions in **experimentCombined/** to generate the experiment results, then move to **python/** for instructions to generate each figure in the paper. 
+## Next Steps
+
+After setting up the network and dependencies as outlined in this README, do the following to reproduce the main results of our paper:
+1. `cd experimentCombined` and follow the instructions in **experimentCombined/README.md** to generate the experiment results.
+1. `cd python` and follow the instructions in **python/README.md** to generate each figure in the paper.
+
+To reproduce latency values (Table II) in the paper:
+1. `cd experimentLatency` and follow the instructions in **experimentLatency/README.md** to measure latency.
+1. `cd python` and follow the instructions in **python/README.md** under the heading Table II.

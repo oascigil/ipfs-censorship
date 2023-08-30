@@ -3,8 +3,8 @@ DOI reserved: 10.5281/zenodo.8300034
 Things to do:
 
 Code:
-- reorganize the readme files (perhaps keep only 1 single file with sections).
-- save figure for all plotting code
+- (done) reorganize the readme files (perhaps keep only 1 single file with sections).
+- (done) save figure for all plotting code
 - (done) Remove AWS instructions before publishing
 - (done) I suggest the authors change all commands to "python3"
 - (done) The requirements.txt is mentioned here. Please make it clear in the steps provided in the readme file.
