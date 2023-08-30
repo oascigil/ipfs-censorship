@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import os
+import argparse
 
 from style import *
 
@@ -13,6 +15,11 @@ data['perfect routing'] = ''
 
 num_experiments = 100
 max_size = 0
+
+argParser = argparse.ArgumentParser()
+argParser.add_argument("-o", "--output", help="output filename")
+args = argParser.parse_args()
+
 for version, log_file in log_files.items():
     if version not in data:
         data[version] = []
@@ -49,4 +56,8 @@ ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 ax.legend()
 #plt.xticks(range(len(data)), list(data.keys()))
+if args.output is not None:
+    if not os.path.exists("plots"):
+        os.makedirs("plots")
+    plt.savefig(os.path.join("plots", args.output), bbox_inches='tight')
 plt.show()

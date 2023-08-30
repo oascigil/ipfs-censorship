@@ -1,15 +1,5 @@
 # Artifacts for NDSS #153: Content Censorship in the InterPlanetary File System
-## SSH Instructions
-For the purpose of evaluating this artifact during the NDSS Artifact evaluation process, we provide access to an AWS instance on which the reviewers can run the experiments in this artifact. To control SSH access, we provide a private key file **ndss24-ae-#14.pem** to the reviewers. Store this file in your local machine. Adjust the permissions of the private key file by running the following command once.
-```
-chmod 400 ndss24-ae-#14.pem
-```
-To log in to the AWS instance, use the command
-```
-ssh -i "ndss24-ae-#14.pem" ubuntu@ec2-35-90-112-189.us-west-2.compute.amazonaws.com
-```
 ## Network Setup
-If you are using the AWS machine mentioned above, then you can skip this step.
 
 For the experiments involving launching a censorship attack, the Sybils nodes must be launched in 'server mode'. This requires allowing other DHT clients and servers to connect to the Sybil peers. This requires the machine hosting the Sybil peers to have a publicly dialable IP address, i.e., it must not be behind a NAT. We use TCP ports 63800 onwards for the Sybil peers and IPFS uses ports 4001 and 5001, so make sure to allow these ports if your machine has a firewall. This is usually done using
 ```

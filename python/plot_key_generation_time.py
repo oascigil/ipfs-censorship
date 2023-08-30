@@ -1,5 +1,6 @@
 import pandas as pd
 from matplotlib import pyplot as plt
+import os
 import os.path
 import numpy as np
 from subprocess import PIPE, Popen
@@ -85,6 +86,8 @@ def sybil_generation_time(ec_filename = './simulation_results/timing_eddsa.csv',
 
 def main():
     sybil_generation_time()
+    if not os.path.exists("plots"):
+        os.makedirs("plots")
     plt.savefig('./plots/sybil_generation_time.pdf', bbox_inches='tight')
     plt.show()
 
